@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+header {
+    margin-top: 100px;
+    text-align: center;
+
+}
+
+main {
+    margin-top: 50px;
+    text-align: left;
+}
+
+h1 {
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+}
+li {
+    font-size: 1.5rem;
+}
+
+main .container {
+    margin-top: 50px;
+    padding: 0rem 2rem;
+    font-size: 1.5rem;
+}
+
+#add-item-bar {
+    text-align: center;
+    margin-bottom: 10px;
+    
+}
+
+input {
+    width: 70%;
+    font-size: 2rem;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    background-color:rgb(242, 239, 237);
+
+}
+
+input:focus {
+    background-color:rgb(241, 235, 230);
+    
+}
+
+#check {
+    width: 2rem;
+}
+
+#check:hover {
+    transform: scale(1.5);
+}
