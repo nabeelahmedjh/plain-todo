@@ -40,7 +40,7 @@ main .container {
     
 }
 
-input {
+#add-task-form input {
     width: 70%;
     font-size: 2rem;
     border-radius: 5px;
@@ -50,15 +50,20 @@ input {
 
 }
 
-input:focus {
+#add-task-form input:focus {
     background-color:rgb(241, 235, 230);
     
 }
 
-#check {
+.symbol {
     width: 2rem;
 }
 
-#check:hover {
+.symbol:hover {
     transform: scale(1.5);
+}
+
+#task-completed {
+    text-decoration: line-through;
+    color: #6D5D6E;
 }

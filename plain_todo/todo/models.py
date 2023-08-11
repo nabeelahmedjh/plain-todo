@@ -7,3 +7,7 @@ class Task(models.Model):
     # date_modified = 
     date_created = models.DateTimeField(auto_now_add=True)
     isCompleted = models.BooleanField(default=False)
+
+
+    def __str__(self) -> str:
+        return self.text

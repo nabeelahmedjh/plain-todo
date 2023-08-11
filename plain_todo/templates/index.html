@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">    
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 </head> 
@@ -23,8 +23,9 @@
             <h1>TODO LIST</h1>
 
             <div id="add-item-bar" class="">
-                <form action="">
-                    <input id='add-new-item' type="text" autofocus placeholder="Input task here..">
+                <form id='add-task-form' action="{% url 'tasks' %}" method='POST' id='add-new-item'>
+                    {% csrf_token %}
+                    <input  type="text" name="task" autofocus placeholder="Input task here..">
                 </form>
                 
             </div>
@@ -38,25 +39,56 @@
         
         <div class="container">
 
+            {% for task in tasks_remaining %}
+
             <div class="row">
+
                 <div class="col-11">
-                    ero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                    {{task.text}}
                 </div>
+
                 <div class="col-1 text-end">
-                    <a href=""><img id="check" src="https://pixlok.com/wp-content/uploads/2021/12/Check-Icon-09iujhd.png" alt=""></a>
+                    <form action="{% url 'edit-task' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <input id="check" type='image' class="symbol" src="https://pixlok.com/wp-content/uploads/2021/12/Check-Icon-09iujhd.png" alt="submit">
+                    </form>
+                    
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-11">
-                    ero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                </div>
-                <div class="col-1 text-end">
-                    <a href=""><img id="check" src="https://pixlok.com/wp-content/uploads/2021/12/Check-Icon-09iujhd.png" alt=""></a>
-                </div>
-            </div>
-            <hr>
+
+            {% endfor %}
         
+        </div>
+
+
+        <div id='task-completed' class="container">
+            <p class="d-inline-flex gap-1">
+                <a  data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="false" >
+                  <img  class="symbol" src="https://icons.veryicon.com/png/o/internet--web/industrial-icon/down-arrow.png" alt="dropdown">
+                </a>
+              </p>
+              <div class="collapse" id="collapse">
+
+                    {% for task in tasks_completed %}
+        
+                    <div class="row">
+        
+                        <div class="col-11">
+                            {{task.text}}
+                        </div>
+                        <div class="col-1 text-end">
+                            <form id="delete-task" action="{% url 'delete-task' task.id %}" method="POST" >
+                                {% csrf_token %}
+                                <input id="check" type='image' class="symbol" src="https://static.vecteezy.com/system/resources/thumbnails/009/344/496/small/x-transparent-free-png.png" alt="submit">
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+        
+                    {% endfor %}
+
+              </div>
         </div>
 
     </main>
@@ -68,13 +100,42 @@
 
     <script>
 
-        let new_item = document.getElementById('add-new-item')
+        // let new_item = document.getElementById('add-new-item')
 
-        new_item.addEventListener('keydown', () => {
+        let form = document.getElementById('add-new-item')
+        form.addEventListener('submit', (event) => {
+
+            event.preventDefault();
             if (event.key === 'Enter') {
                 console.log("enter is pressed, Task:", new_item.value)
             }
         })
+
+
+        form.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+            event.preventDefault(); // Prevent the Enter key from triggering default behavior
+            if (form.querySelector('input').value.trim() === '') {
+                console.log("empty")
+            } else {
+                form.submit(); // Manually trigger form submission
+            }
+
+            }
+        });
+
+        dlt_task_form = document.getElementById('delete-task')
+
+        // dlt_task_form.addEventListener('submit', (e) => {
+        //     e.preventDefault()
+
+        //     url = dlt_task_form.action
+
+        //     fetch(url, {
+        //         method: "DELETE"
+        //     })
+        //     .then()
+        // })
         
     </script>
 </body>
